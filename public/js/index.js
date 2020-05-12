@@ -63,23 +63,60 @@ var refreshExamples = function() {
 // Save the new example to the db and refresh the list
 var handleFormSubmit = function(event) {
   event.preventDefault();
+  var APIKey = "166a433c57516f51dfab1f7edaed8413";
+  var home = $exampleText.val().trim();
+  var destination = $exampleDescription.val().trim();
+  var queryURL =
+    "https://api.openweathermap.org/data/2.5/weather?" +
+    "q=" +
+    home +
+    "&units=imperial&appid=" +
+    APIKey;
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    var homeCity = {
+      locationType: "Hometown",
+      locationName: response.name,
+      longitude: response.coord.lon,
+      latitude: response.coord.lat
+    };
+    console.log(homeCity);
+    if (!homeCity.locationName) {
+      alert("You must enter a home city");
+      return;
+    }
+    API.saveExample(homeCity).then(function() {
+      var queryURL =
+        "https://api.openweathermap.org/data/2.5/weather?" +
+        "q=" +
+        destination +
+        "&units=imperial&appid=" +
+        APIKey;
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(res) {
+        var destinationCity = {
+          locationType: "Destination",
+          locationName: res.name,
+          longitude: res.coord.lon,
+          latitude: res.coord.lat
+        };
+        console.log(destinationCity.latitude);
+        console.log(homeCity.latitude);
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
-  };
+        console.log(distance);
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
-  }
-
-  API.saveExample(example).then(function() {
-    refreshExamples();
+        API.saveExample(destinationCity).then(function() {
+          refreshExamples();
+        });
+        $exampleText.val("");
+        $exampleDescription.val("");
+      });
+    });
   });
-
-  $exampleText.val("");
-  $exampleDescription.val("");
 };
 
 // handleDeleteBtnClick is called when an example's delete button is clicked

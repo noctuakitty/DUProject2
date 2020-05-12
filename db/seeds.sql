@@ -1,4 +1,4 @@
-insert into destinations (locationType,locationName,city) values ('Island','Hawaii','Honolulu');
+ insert into destinations (locationType,locationName,city) values ('Island','Hawaii','Honolulu');
 insert into destinations (locationType,locationName,city) values ('Island','Hawaii','Kailua');
 insert into destinations (locationType,locationName,city) VALUES ('Island','fiji','Labasa');
 insert into destinations (locationType,locationName,city) VALUES ('Island','fiji','suva');
