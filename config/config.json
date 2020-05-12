@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "hotsauce26",
+    "password": "rootroot",
     "database": "destinations",
     "host": "localhost",
     "dialect": "mysql"

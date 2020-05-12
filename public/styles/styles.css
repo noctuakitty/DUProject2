@@ -1,29 +1,20 @@
-.list-group-item {
-  line-height: 2.5;
+body {
+  font-family: 'Times New Roman', Times, serif;
 }
-h1,h3 {
-  text-align:center;
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 3px;
+  margin-top: 5px;
 }
-.column-title {
-  width: 80%;
-}
-
-h1 {
-  margin-top:40px;
-  margin-bottom: 20px;
-}
-.descript {
-  font-size: 10px;
-}
-.name {
-  font-size:12px;
-}
-.main {
-  border-width: 5px;
-  border-color: black;
-  border: solid;
-  border-radius: 10px;
-  background-color:yellow;
+.jumbotron {
+  text-align: center;
+  margin: 20px;
+  border: 1px solid black;
+  color: black;
 }
 .custom-select,.dropdown-item,.dropdown-menu.show {
   background:black;
@@ -31,38 +22,10 @@ h1 {
   text-align: center;
   padding: 0px 5px;
 }
-.burger {
-  margin-bottom: 15px;
-}
-body {
-  font-family: cooper;
-}
-.orderburg {
-  margin-left: 0px;
-  
-}
-th {
-  border-bottom: solid black 2px;
-}
-.col-3 {
-  padding: 0px 0px;
-}
-.btn-danger {
-  padding: 0px 5px;
-}
-
-.b-icon {
-  height: 30px;
-}
-
-.e-icon {
-  height: 35px;
-}
-#burg {
-  width:80%;
-}
-#addburger {
+h1,h3 {
   text-align:center;
 }
-
-
+h1 {
+  margin-top:40px;
+  margin-bottom: 20px;
+}
