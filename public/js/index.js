@@ -106,7 +106,12 @@ var handleFormSubmit = function(event) {
         };
         console.log(destinationCity.latitude);
         console.log(homeCity.latitude);
-
+        var distance = getDistance(
+          homeCity.latitude,
+          destinationCity.latitude,
+          homeCity.longitude,
+          destinationCity.longitude
+        );
         console.log(distance);
 
         API.saveExample(destinationCity).then(function() {
@@ -131,6 +136,21 @@ var handleDeleteBtnClick = function() {
   });
 };
 
+var getDistance = function(lat1, lat2, lon1, lon2) {
+  var R = 3958.8; // metres
+  var φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+  var φ2 = (lat2 * Math.PI) / 180;
+  var Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  var Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+  var a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  var d = R * c;
+  return d;
+};
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);

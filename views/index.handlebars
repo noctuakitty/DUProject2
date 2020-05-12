@@ -16,8 +16,8 @@
         <h3>Destinations:</h3>
         <ul id="example-list" class="list-group">
           {{#each destination}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.locationName}}</a>
+          <li data-id="{{id}}" class="list-group-item">
+            <a href="example/{{id}}">{{locationName}}</a>
             <button class="btn btn-danger float-right delete">ｘ</button>
           </li>
           {{/each}}
@@ -28,5 +28,5 @@
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/../node_modules/geolib/lib/index.js" type="text/javascript"></script>
+{{!-- <script src="/../node_modules/geolib/lib/index.js" type="application/javascript"></script> --}}
 <script src="/js/index.js"></script>
