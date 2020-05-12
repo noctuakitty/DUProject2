@@ -23,7 +23,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="colum">
+            <div class="col-4 ">
                 <form id="form">
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
@@ -49,50 +49,52 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-on">
                         </div>
                     </div>
+                    
                 </form>
             </div>
+            <div class="col-4 text-center">
+                <form id="form">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Amenities
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="amenities">
+
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Car
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="car">
+
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add Ons
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-on">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Done<img class="b-icon"></button>
+                </form>
+            </div>
+            <div class="col-4">
+                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Total</div>
+                    <div class="card-body">
+                        <h4 class="card-title" id="userPrice">$</h4>
+                        <p id="userMilage">Milage</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="colum">
-        <form id="form">
-            <div class="dropdown">
-                <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Amenities
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="amenities">
 
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Car
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="car">
-
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="btn btn-secondary btn-block mt-3 mb-5 dropdown-toggle" type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add Ons
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-on">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-secondary">Done<img class="b-icon"></button>
-        </form>
-    </div>
-    <div class="colum">
-        <div class="card border-secondary mb-3" style="max-width: 20rem;">
-            <div class="card-header">Total</div>
-            <div class="card-body">
-                <h4 class="card-title" id="userPrice">$</h4>
-                <p id="userMilage">Milage</p>
-            </div>
-        </div>
-    </div>
 
     <footer>
         &copy; 2020 Copyright
