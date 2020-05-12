@@ -35,7 +35,7 @@ var refreshExamples = function() {
   API.getExamples().then(function(data) {
     var $examples = data.map(function(example) {
       var $a = $("<a>")
-        .text(example.text)
+        .text(example.locationName)
         .attr("href", "/example/" + example.id);
 
       var $li = $("<li>")
