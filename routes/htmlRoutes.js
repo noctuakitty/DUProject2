@@ -7,7 +7,7 @@ module.exports = function(app) {
       include: [db.User]
     }).then(function(destinations) {
       var destinations = destinations;
-      console.log(destinations)
+      console.log(destinations);
       db.User.findAll({}).then(function(users) {
         res.render("index", {
           destination: destinations,
@@ -18,13 +18,25 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
+  app.get("/trip/:id", function(req, res) {
     db.Destination.findOne({ where: { id: req.params.id } }).then(function(
       destinations
     ) {
       console.log(destinations);
-      res.render("example", {
+      res.render("trip", {
         destination: destinations
+      });
+    });
+  });
+  app.get("/traveler/:id", function(req, res) {
+    db.Destination.findAll({
+      where: { UserId: req.params.id },
+      include: [db.User]
+    }).then(function(destinations) {
+      console.log(destinations);
+      res.render("traveler", {
+        destination: destinations,
+        user: req.params.id
       });
     });
   });

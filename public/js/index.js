@@ -81,7 +81,7 @@ var handleFormSubmit = function(event) {
   var APIKey = "166a433c57516f51dfab1f7edaed8413";
   var home = $exampleText.val().trim();
   var destination = $exampleDescription.val().trim();
-  var user = $("#traveller").val();
+  var user = $("#traveler").val();
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?" +
     "q=" +
@@ -138,10 +138,10 @@ var handleFormSubmit = function(event) {
 var createNewTraveller = function(event) {
   event.preventDefault();
   var newUser = {
-    userName: $("#traveller-name")
+    userName: $("#traveler-name")
       .val()
       .trim(),
-    homeTown: $("#home-town")
+    homeTown: $("#hometown")
       .val()
       .trim()
   };
@@ -161,23 +161,12 @@ var handleDeleteBtnClick = function() {
     refreshExamples();
   });
 };
-
-var getDistance = function(lat1, lat2, lon1, lon2) {
-  var R = 3958.8; // metres
-  var φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
-  var φ2 = (lat2 * Math.PI) / 180;
-  var Δφ = ((lat2 - lat1) * Math.PI) / 180;
-  var Δλ = ((lon2 - lon1) * Math.PI) / 180;
-
-  var a =
-    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  var d = R * c;
-  return d;
+var goToPage = function() {
+  var user = $("#traveler").val();
+  var url = "/traveler/" + user;
+  window.location.assign(url);
 };
 // Add event listeners to the submit and delete buttons
 $("#submit-user").on("click", createNewTraveller);
-$submitBtn.on("click", handleFormSubmit);
+$submitBtn.on("click", goToPage);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
