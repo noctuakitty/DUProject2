@@ -27,6 +27,16 @@ var API = {
       url: "api/examples/" + id,
       type: "DELETE"
     });
+  },
+  saveUser: function(user) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "api/users",
+      data: JSON.stringify(user)
+    });
   }
 };
 
@@ -34,24 +44,29 @@ var API = {
 var refreshExamples = function() {
   API.getExamples().then(function(data) {
     var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.locationName)
-        .attr("href", "/example/" + example.id);
+      var $row = $("div")
+        .addClass("row")
+        .attr("data-id", example.id);
+      var $col1 = $("<div>")
+        .addClass("col-4")
+        .append($("<p>").text("Departure City: " + example.departureCity))
+        .append($("<p>").text("Arrival City: " + example.arrivalCity))
+        .append($("<p>").text("Trip Distance: " + example.tripDistance));
 
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
-
+      var $col2 = $("<div>").addClass("col-4");
+      var $col3 = $("<div>").addClass("col-4");
       var $button = $("<button>")
         .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
+        .attr("href", "/example/" + example.id)
+        .text("view");
 
-      $li.append($button);
+      $col3.append($button);
+      $row
+        .append($col1)
+        .append($col2)
+        .append($col3);
 
-      return $li;
+      return $row;
     });
 
     $exampleList.empty();
@@ -66,6 +81,7 @@ var handleFormSubmit = function(event) {
   var APIKey = "166a433c57516f51dfab1f7edaed8413";
   var home = $exampleText.val().trim();
   var destination = $exampleDescription.val().trim();
+  var user = $("#traveler").val();
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?" +
     "q=" +
@@ -76,51 +92,61 @@ var handleFormSubmit = function(event) {
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    var homeCity = {
-      locationType: "Hometown",
-      locationName: response.name,
-      longitude: response.coord.lon,
-      latitude: response.coord.lat
-    };
-    console.log(homeCity);
-    if (!homeCity.locationName) {
+    home = response.name;
+    var departureLon = response.coord.lon;
+    var departureLat = response.coord.lat;
+
+    if (!home) {
       alert("You must enter a home city");
       return;
     }
-    API.saveExample(homeCity).then(function() {
-      var queryURL =
-        "https://api.openweathermap.org/data/2.5/weather?" +
-        "q=" +
-        destination +
-        "&units=imperial&appid=" +
-        APIKey;
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(res) {
-        var destinationCity = {
-          locationType: "Destination",
-          locationName: res.name,
-          longitude: res.coord.lon,
-          latitude: res.coord.lat
-        };
-        console.log(destinationCity.latitude);
-        console.log(homeCity.latitude);
-        var distance = getDistance(
-          homeCity.latitude,
-          destinationCity.latitude,
-          homeCity.longitude,
-          destinationCity.longitude
-        );
-        console.log(distance);
 
-        API.saveExample(destinationCity).then(function() {
-          refreshExamples();
-        });
-        $exampleText.val("");
-        $exampleDescription.val("");
+    var queryURL =
+      "https://api.openweathermap.org/data/2.5/weather?" +
+      "q=" +
+      destination +
+      "&units=imperial&appid=" +
+      APIKey;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(res) {
+      destination = res.name;
+      var arrivalLon = res.coord.lon;
+      var arrivalLat = res.coord.lat;
+
+      var distance = getDistance(
+        departureLat,
+        arrivalLat,
+        departureLon,
+        arrivalLon
+      );
+      console.log(user);
+      var trip = {
+        departureCity: home,
+        arrivalCity: destination,
+        tripDistance: distance,
+        UserId: user
+      };
+
+      API.saveExample(trip).then(function() {
+        location.reload();
       });
     });
+  });
+};
+var createNewTraveller = function(event) {
+  event.preventDefault();
+  var newUser = {
+    userName: $("#traveler-name")
+      .val()
+      .trim(),
+    homeTown: $("#hometown")
+      .val()
+      .trim()
+  };
+  API.saveUser(newUser).then(function() {
+    location.reload();
   });
 };
 
@@ -135,22 +161,12 @@ var handleDeleteBtnClick = function() {
     refreshExamples();
   });
 };
-
-var getDistance = function(lat1, lat2, lon1, lon2) {
-  var R = 3958.8; // metres
-  var φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
-  var φ2 = (lat2 * Math.PI) / 180;
-  var Δφ = ((lat2 - lat1) * Math.PI) / 180;
-  var Δλ = ((lon2 - lon1) * Math.PI) / 180;
-
-  var a =
-    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  var d = R * c;
-  return d;
+var goToPage = function() {
+  var user = $("#traveler").val();
+  var url = "/traveler/" + user;
+  window.location.assign(url);
 };
 // Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
+$("#submit-user").on("click", createNewTraveller);
+$submitBtn.on("click", goToPage);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);

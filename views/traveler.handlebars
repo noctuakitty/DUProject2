@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form action="POST">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="example-text">Departure City:</label>
+                        <input type="text" id="departure" class="form-control" aria-describedby="example-text"
+                            placeholder="Departure City">
+                    </div>
+                    <div class="col">
+                        <label for="example-description">Arrival City</label>
+                        <input type="text" class="form-control" id="arrival" aria-describedby="example-description"
+                            placeholder="Arrival City"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <select class="selectpicker custom-select" id="traveler">
+                        <option></option>
+                        <option>Beach/Island</option>
+                        <option>Mountain/Skiing</option>
+                        <option>Exhibition/Camping</option>
+                        <option>Cultural/Historic</option>
+
+
+                    </select>
+                </div>
+                <button id="submit" value="{{user}}" class="btn btn-primary float-right">Submit</button>
+            </form>
+        </div>
+        <div class="col-6">
+            <div id="example-list" class="container">
+                {{#each destination}}
+                <div data-id="{{this.id}}" class="row">
+                    <div class="col-4">
+                        <p>Departure City: {{this.departureCity}}</p>
+                        <p>Arrival City: {{this.arrivalCity}}</p>
+                        <p>Trip Distance: {{this.tripDistance}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Trip made by:</p>
+                        <p>{{this.User.userName}}</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View
+                                Trip</button></a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/traveler.js"></script>

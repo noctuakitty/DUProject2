@@ -2,31 +2,58 @@
   <div class="container">
     <div class="row">
       <div class="col-8 offset-2">
+        <h3 style="margin-top:50px">Create New Traveler</h3>
         <form class="clearfix mb-4" action="POST">
           <div class="form-group">
-            <label for="example-text">Beginning City</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
+            <label for="example-text">Traveler:</label>
+            <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text"
+              placeholder="Traveler">
           </div>
           <div class="form-group">
-            <label for="example-description">Destination</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
+            <label for="example-description">Hometown</label>
+            <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
+              placeholder="Hometown"></textarea>
           </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
+          <button id="submit-user" class="btn btn-primary float-right">Submit</button>
         </form>
-        <h3>Destinations:</h3>
-        <ul id="example-list" class="list-group">
+        <form class="clearfix mb-4" action="POST">
+          <div class="form-group">
+            <label for="category">Select Traveler:</label>
+            <select class="selectpicker custom-select" id="traveler">
+              <option></option>
+              {{#each user}}
+              <option value="{{this.id}}">{{this.userName}}</option>
+              {{/each}}
+
+            </select>
+          
+          <button id="submit" type="button" class="btn btn-primary float-right">Submit</button>
+        </form>
+       
+        <h3 style="margin-top:50px">Trips taken:</h3>
+        <div id="example-list" class="container">
           {{#each destination}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.locationName}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
+          <div data-id="{{this.id}}" class="row">
+            <div class="col-4">
+              <p>Departure City: {{this.departureCity}}</p>
+              <p>Arrival City: {{this.arrivalCity}}</p>
+              <p>Trip Distance: {{this.tripDistance}}</p>
+            </div>
+            <div class="col-4">
+              <p>Trip made by:</p>
+              <p>{{this.User.userName}}</p>
+            </div>
+            <div class="col-4">
+              <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View Trip</button></a>
+            </div>
+          </div>
+          {{/each}} 
+
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{{!-- <script src="/../node_modules/geolib/lib/index.js" type="application/javascript"></script> --}}
-<script src="/js/index.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {{!-- <script src="/../node_modules/geolib/lib/index.js" type="application/javascript"></script> --}}
+  <script src="/js/index.js"></script>
