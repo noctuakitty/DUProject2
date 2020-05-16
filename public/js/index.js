@@ -1,6 +1,4 @@
 // Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $exampleList = $("#example-list");
 
@@ -76,65 +74,7 @@ var refreshExamples = function() {
 
 // handleFormSubmit is called whenever we submit a new example
 // Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
-  event.preventDefault();
-  var APIKey = "166a433c57516f51dfab1f7edaed8413";
-  var home = $exampleText.val().trim();
-  var destination = $exampleDescription.val().trim();
-  var user = $("#traveler").val();
-  var queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?" +
-    "q=" +
-    home +
-    "&units=imperial&appid=" +
-    APIKey;
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    home = response.name;
-    var departureLon = response.coord.lon;
-    var departureLat = response.coord.lat;
 
-    if (!home) {
-      alert("You must enter a home city");
-      return;
-    }
-
-    var queryURL =
-      "https://api.openweathermap.org/data/2.5/weather?" +
-      "q=" +
-      destination +
-      "&units=imperial&appid=" +
-      APIKey;
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(res) {
-      destination = res.name;
-      var arrivalLon = res.coord.lon;
-      var arrivalLat = res.coord.lat;
-
-      var distance = getDistance(
-        departureLat,
-        arrivalLat,
-        departureLon,
-        arrivalLon
-      );
-      console.log(user);
-      var trip = {
-        departureCity: home,
-        arrivalCity: destination,
-        tripDistance: distance,
-        UserId: user
-      };
-
-      API.saveExample(trip).then(function() {
-        location.reload();
-      });
-    });
-  });
-};
 var createNewTraveller = function(event) {
   event.preventDefault();
   var newUser = {

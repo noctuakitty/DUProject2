@@ -1,16 +1,26 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
   app.get("/api/trips", function(req, res) {
     db.Destination.findAll({}).then(function(dbExamples) {
       res.json(dbExamples);
     });
   });
-
-  // Create a new example
-  app.post("/api/trips", function(req, res) {
+  app.get("/api/trips/:id", function(req, res) {
+    console.log(req.params.id);
+    db.Activity.findAll({
+      where: { arrivalCity: req.params.id }
+    }).then(function(dbExamples) {
+      res.json(dbExamples);
+    });
+  });
+  app.post("/api/activities", function(req, res) {
     console.log(req.body);
+    db.Activity.create(req.body).then(function(dbExample) {
+      res.json(dbExample);
+    });
+  });
+  app.post("/api/trips", function(req, res) {
     db.Destination.create(req.body).then(function(dbExample) {
       res.json(dbExample);
     });

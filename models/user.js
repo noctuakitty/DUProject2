@@ -1,7 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    userName: DataTypes.STRING,
-    homeTown: DataTypes.STRING
+    userName: { type: DataTypes.STRING, allowNull: false },
+    homeTown: DataTypes.STRING,
+    milesTraveled: { type: DataTypes.INTEGER, defaultValue: 0 }
   });
   User.associate = function(models) {
     // Associating Author with Posts
