@@ -7,7 +7,7 @@ module.exports = function(app) {
       include: [db.User]
     }).then(function(destinations) {
       var destinations = destinations;
-      console.log(destinations);
+
       db.User.findAll({}).then(function(users) {
         res.render("index", {
           destination: destinations,
@@ -29,14 +29,14 @@ module.exports = function(app) {
     });
   });
   app.get("/traveler/:id", function(req, res) {
-    db.Destination.findAll({
-      where: { UserId: req.params.id },
-      include: [db.User]
-    }).then(function(destinations) {
-      console.log(destinations);
+    db.User.findOne({
+      where: { id: req.params.id },
+      include: [db.Destination]
+    }).then(function(user) {
+
       res.render("traveler", {
-        destination: destinations,
-        user: req.params.id
+        destination: user.Destinations,
+        user: user
       });
     });
   });
