@@ -9,7 +9,9 @@ module.exports = function(sequelize, DataTypes) {
     // When an Author is deleted, also delete any associated Posts
 
     Activity.belongsTo(models.Destination, {
-      foreignKey: "arrivalCity"
+      foreignKey: {
+        allowNull: false
+      }
     });
   };
   return Activity;

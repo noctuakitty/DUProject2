@@ -8,9 +8,11 @@ module.exports = function(app) {
   });
   app.get("/api/trips/:id", function(req, res) {
     console.log(req.params.id);
-    db.Activity.findAll({
-      where: { arrivalCity: req.params.id }
+    db.Destination.findAll({
+      where: { arrivalCity: req.params.id },
+      include: [db.Activity]
     }).then(function(dbExamples) {
+      console.log(dbExamples)
       res.json(dbExamples);
     });
   });

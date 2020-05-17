@@ -4,18 +4,16 @@
         <div class="col-6">
             <form action="POST" style="margin-bottom:50px" id="start-trip-form">
                 <div class="form-row">
-                    <div class="col" >
+                    <div class="col">
                         <label>Departure City:</label>
-                        <input type="text" id="departure" class="form-control"
-                            placeholder="Departure City">
+                        <input type="text" id="departure" class="form-control" placeholder="Departure City">
                     </div>
                     <div class="col">
                         <label for="example-description">Arrival City</label>
-                        <input type="text" class="form-control" id="arrival"
-                            placeholder="Arrival City"></textarea>
+                        <input type="text" class="form-control" id="arrival" placeholder="Arrival City"></textarea>
                     </div>
                 </div>
-                <div class="form-row"> 
+                <div class="form-row">
                     <select class="selectpicker custom-select form-control" id="trip-type">
                         <option></option>
                         <option>Beach</option>
@@ -34,12 +32,15 @@
                 <p id="arrive-text"></p>
                 <p id="distance-text"></p>
                 <p id="trip-type-text"></p>
-                <div class="form-row">
-                    <div class="col-4" id="activity-input-div"></div>
-                    <div class="col-4" id="activity-des-div"></div>
-                    <div class="col-4" id="activity-button-div"></div>
-                </div>
-                <div id="activities"></div>
+                <form>
+                    <div class="form-row">
+                        <div class="col-4" id="activity-input-div"></div>
+                        <div class="col-4" id="activity-des-div"></div>
+                        <div class="col-4" id="activity-button-div"></div>
+                    </div>
+                    <div id="activities"></div>
+                    <div id="finish-trip"></div>
+                </form>
             </div>
         </div>
         <div class="col-6">
@@ -52,8 +53,12 @@
                         <p>Trip Distance: {{this.tripDistance}}</p>
                     </div>
                     <div class="col-4">
-                        <p>Trip made by:</p>
-                        <p>{{user.userName}}</p>
+                        <p>Stuff did:</p>
+                        <ul>
+                            {{#each activities}}
+                            <li>{{this.activityName}}</li>
+                            {{/each}}
+                        </ul>
                     </div>
                     <div class="col-4">
                         <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View
