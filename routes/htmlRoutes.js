@@ -31,11 +31,32 @@ module.exports = function(app) {
   app.get("/traveler/:id", function(req, res) {
     db.User.findOne({
       where: { id: req.params.id },
-      include: [db.Destination]
+      include: [db.Destination, db.Activity]
     }).then(function(user) {
+      var destinations = [];
 
+      for (var i = 0; i < user.Destinations.length; i++) {
+        var activities = [];
+        for (var j = 0; j < user.Activities.length; j++) {
+          if (user.Destinations[i].id === user.Activities[j].DestinationId) {
+            activities.push({
+              id: user.Activities[j].id,
+              activityName: user.Activities[j].activityName,
+              activityDescripiton: user.Activities[j].activityDescription
+            });
+          }
+        }
+        destinations[i] = {
+          id: user.Destinations[i].id,
+          departureCity: user.Destinations[i].departureCity,
+          arrivalCity: user.Destinations[i].arrivalCity,
+          tripDistance: user.Destinations[i].tripDistance,
+          activities: activities
+        };
+      }
+      console.log(destinations[4].activities[1].activityName);
       res.render("traveler", {
-        destination: user.Destinations,
+        destination: destinations,
         user: user
       });
     });
