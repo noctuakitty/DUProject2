@@ -1,31 +1,8 @@
 body {
   font-family: 'Times New Roman', Times, serif;
+  background-image: url(https://www.nanobionic-group.com/wp-content/uploads/2020/02/nano-home-bg-tiny.jpg);
+  color: whitesmoke;
 }
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 3px;
-  margin-top: 5px;
-}
-.jumbotron {
-  text-align: center;
-  margin: 20px;
-  border: 1px solid black;
-  color: black;
-}
-.custom-select,.dropdown-item,.dropdown-menu.show {
-  background:black;
-  color: white;
-  text-align: center;
-  padding: 0px 5px;
-}
-h1,h3 {
-  text-align:center;
-}
-h1 {
-  margin-top:40px;
-  margin-bottom: 20px;
+h3 {
+  color: whitesmoke;
 }
