@@ -7,12 +7,10 @@ module.exports = function(app) {
     });
   });
   app.get("/api/trips/:id", function(req, res) {
-    console.log(req.params.id);
     db.Destination.findAll({
       where: { arrivalCity: req.params.id },
       include: [db.Activity]
     }).then(function(dbExamples) {
-      console.log(dbExamples)
       res.json(dbExamples);
     });
   });
@@ -31,6 +29,19 @@ module.exports = function(app) {
     console.log(req.body);
     db.User.create(req.body).then(function(dbExample) {
       res.json(dbExample);
+    });
+  });
+  app.put("/api/users/:id", function(req, res) {
+    console.log(req.body)
+    db.User.update(
+      { milesTraveled: req.body.milesTraveled },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    ).then(function(results) {
+      res.json(results);
     });
   });
 

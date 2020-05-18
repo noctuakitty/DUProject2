@@ -1,9 +1,10 @@
 <div class="container">
-    <h1>{{user.userName}}</h1>
+    <h2>{{user.userName}}</h2>
+    <h4 id="miles" value="{{user.milesTraveled}}">Miles Traveled:  {{user.milesTraveled}}</h4>
     <div class="row">
         <div class="col-6">
             <form action="POST" style="margin-bottom:50px" id="start-trip-form">
-                <div class="form-row">
+                <div class="form-row" style="margin-bottom:50px">
                     <div class="col">
                         <label>Departure City:</label>
                         <input type="text" id="departure" class="form-control" placeholder="Departure City">
@@ -13,7 +14,7 @@
                         <input type="text" class="form-control" id="arrival" placeholder="Arrival City"></textarea>
                     </div>
                 </div>
-                <div class="form-row">
+                {{!-- <div class="form-row">
                     <select class="selectpicker custom-select form-control" id="trip-type">
                         <option></option>
                         <option>Beach</option>
@@ -23,7 +24,7 @@
 
 
                     </select>
-                </div>
+                </div> --}}
                 <button id="submit" value="{{user.id}}" class="btn btn-primary float-right">Start Trip</button>
             </form>
 
