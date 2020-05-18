@@ -4,17 +4,17 @@ module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
     db.Destination.findAll({
-      include: [db.User]
+      include: [db.User, db.Activity],
+      order: [["createdAt", "DESC"]]
     }).then(function(destinations) {
       var destinations = destinations;
-
       db.User.findAll({}).then(function(users) {
         res.render("index", {
           destination: destinations,
           user: users
         });
       });
-    });
+    }); 
   });
 
   // Load example page and pass in an example by id
@@ -33,7 +33,7 @@ module.exports = function(app) {
       where: { id: req.params.id },
       include: [db.Destination, db.Activity]
     }).then(function(user) {
-      var destinations = [];
+      var destinations = user.Destinations;
 
       for (var i = 0; i < user.Destinations.length; i++) {
         var activities = [];
@@ -54,7 +54,7 @@ module.exports = function(app) {
           activities: activities
         };
       }
-      console.log(destinations[4].activities[1].activityName);
+  
       res.render("traveler", {
         destination: destinations,
         user: user

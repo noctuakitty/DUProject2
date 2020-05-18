@@ -52,9 +52,6 @@ var startTrip = function(event) {
     .val()
     .trim();
   var user = $("#submit").val();
-  var tripType = $("#trip-type")
-    .val()
-    .trim();
   $("#start-trip-form").empty();
   $("#depart-text")
     .text("Departure City: " + home)
@@ -62,9 +59,9 @@ var startTrip = function(event) {
   $("#arrive-text")
     .text("Arrival City:  " + destination)
     .attr("data-name", destination);
-  $("#trip-type-text")
-    .text("Trip Type: " + tripType)
-    .attr("data-name", tripType);
+  // $("#trip-type-text")
+  //   .text("Trip Type: " + tripType)
+  //   .attr("data-name", tripType);
   queryLocations(home, destination, user);
 };
 
@@ -76,9 +73,6 @@ var saveTripActivities = function(activity, description, tripData, i) {
     UserId: tripData.UserId
   };
   API.saveActivities(activity).then(function() {
-    if (i === activityArray.length - 1) {
-      window.reload();
-    }
     return;
   });
 };
@@ -164,7 +158,8 @@ var queryLocations = function(home, destination, user) {
 };
 var printActivityDiv = function(data) {
   var tripData = data;
-  console.log(tripData);
+  var userMiles = parseInt($("#miles").attr("value"));
+  console.log(userMiles);
   var activityLabel = $("<label>").text("Activity");
   var activityInput = $("<input>")
     .attr("type", "text")
@@ -185,11 +180,17 @@ var printActivityDiv = function(data) {
   $("#activity-des-div").append(activityDescLabel);
   $("#activity-des-div").append(activityDesc);
   $("#activity-button-div").append(button);
+  var blogText = $("<div>")
+    .attr("type", "text")
+    .attr("id", "trip-blog")
+    .addClass("form-control")
+    .attr("rows", "3");
   var button2 = $("<button>")
     .attr("type", "button")
     .attr("id", "submit-trip")
     .addClass("btn btn-danger")
     .text("Finish Trip");
+  $("#finish-trip").append(blogText);
   $("#finish-trip").append(button2);
 
   $("#add-activity").on("click", function() {
@@ -212,7 +213,18 @@ var printActivityDiv = function(data) {
         saveTripActivities(activity, description, tripData);
       }
     }
-    location.reload();
+    userMiles += parseInt(tripData.tripDistance);
+    var newMiles = {
+      id: tripData.UserId,
+      milesTraveled: userMiles
+    };
+    userMiles += tripData.tripDistance;
+    $.ajax("/api/users/" + tripData.UserId, {
+      type: "PUT",
+      data: newMiles
+    }).then(function() {
+      location.reload();
+    });
   });
 };
 var getDistance = function(lat1, lat2, lon1, lon2) {

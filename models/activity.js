@@ -5,9 +5,6 @@ module.exports = function(sequelize, DataTypes) {
     activityType: DataTypes.STRING
   });
   Activity.associate = function(models) {
-    // Associating Author with Po
-    // When an Author is deleted, also delete any associated Posts
-
     Activity.belongsTo(models.Destination, {
       foreignKey: {
         allowNull: false

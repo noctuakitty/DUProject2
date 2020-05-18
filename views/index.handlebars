@@ -48,10 +48,15 @@
               <p>Departure City: {{this.departureCity}}</p>
               <p>Arrival City: {{this.arrivalCity}}</p>
               <p>Trip Distance: {{this.tripDistance}}</p>
+              <p>{{this.User.userName}}</p>
             </div>
             <div class="col-4">
-              <p>Trip made by:</p>
-              <p>{{this.User.userName}}</p>
+              <p>Stuff Did:</p>
+              <ul>
+                {{#each Activities}}
+                <li>{{this.activityName}}</li>
+                {{/each}}
+              </ul>
             </div>
             <div class="col-4">
               <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View Trip</button></a>
