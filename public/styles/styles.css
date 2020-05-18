@@ -1,3 +1,11 @@
-.list-group-item {
-  line-height: 2.5;
+body {
+  font-family: 'Times New Roman', Times, serif;
+  background-image: url(https://www.publicdomainpictures.net/pictures/190000/velka/travel-background-1469438406Duy.jpg);
+  background-size: cover;
+  color: #FDFEFE;
+  text-shadow: black -1px 1px 0;
+}
+h3 {
+  color: #FDFEFE;
+  text-shadow: black -1px 1px 0;
 }

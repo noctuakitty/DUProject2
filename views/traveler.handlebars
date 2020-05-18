@@ -1,31 +1,42 @@
-<div class="container">
-    <h1>{{user.userName}}</h1>
-    <div class="row">
-        <div class="col-6">
-            <form action="POST" style="margin-bottom:50px" id="start-trip-form">
-                <div class="form-row">
-                    <div class="col">
-                        <label>Departure City:</label>
-                        <input type="text" id="departure" class="form-control" placeholder="Departure City">
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-smnSwzHqW1zKbeuSMsAM/fMQpkk7HY11LuHiwT8snL/W2QBoZtVCT4H5x1CEcJCs" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{user.userName}}</h1>
+        <div class="row">
+            <div class="col-6">
+                <form action="POST" style="margin-bottom:50px" id="start-trip-form">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Departure City:</label>
+                            <input type="text" id="departure" class="form-control" placeholder="Departure City">
+                        </div>
+                        <div class="col">
+                            <label for="example-description">Arrival City</label>
+                            <input type="text" class="form-control" id="arrival" placeholder="Arrival City"></textarea>
+                        </div>
                     </div>
-                    <div class="col">
-                        <label for="example-description">Arrival City</label>
-                        <input type="text" class="form-control" id="arrival" placeholder="Arrival City"></textarea>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <select class="selectpicker custom-select form-control" id="trip-type">
-                        <option></option>
-                        <option>Beach</option>
-                        <option>Skiing</option>
-                        <option>Camping</option>
-                        <option>Cultural</option>
+                    <div class="form-row">
+                        <select class="selectpicker custom-select form-control" id="trip-type">
+                            <option></option>
+                            <option>Beach</option>
+                            <option>Skiing</option>
+                            <option>Camping</option>
+                            <option>Cultural</option>
 
 
-                    </select>
-                </div>
-                <button id="submit" value="{{user.id}}" class="btn btn-primary float-right">Start Trip</button>
-            </form>
+                        </select>
+                    </div>
+                    <button id="submit" value="{{user.id}}" class="btn btn-primary float-right">Start Trip</button>
+                </form>
 
             <div id="trip-log">
                 <p id="depart-text"></p>
@@ -64,13 +75,15 @@
                         <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View
                                 Trip</button></a>
                     </div>
+                    {{/each}}
                 </div>
-                {{/each}}
             </div>
         </div>
     </div>
-</div>
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/traveler.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/js/traveler.js"></script>
+</body>
+
+</html>
