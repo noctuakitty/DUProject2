@@ -38,36 +38,42 @@
                     <button id="submit" value="{{user.id}}" class="btn btn-primary float-right">Start Trip</button>
                 </form>
 
-                <div id="trip-log">
-                    <p id="depart-text"></p>
-                    <p id="arrive-text"></p>
-                    <p id="distance-text"></p>
-                    <p id="trip-type-text"></p>
+            <div id="trip-log">
+                <p id="depart-text"></p>
+                <p id="arrive-text"></p>
+                <p id="distance-text"></p>
+                <p id="trip-type-text"></p>
+                <form>
                     <div class="form-row">
                         <div class="col-4" id="activity-input-div"></div>
                         <div class="col-4" id="activity-des-div"></div>
                         <div class="col-4" id="activity-button-div"></div>
                     </div>
                     <div id="activities"></div>
-                </div>
+                    <div id="finish-trip"></div>
+                </form>
             </div>
-            <div class="col-6">
-                <div id="example-list" class="container">
-                    {{#each destination}}
-                    <div data-id="{{this.id}}" class="row">
-                        <div class="col-4">
-                            <p>Departure City: {{this.departureCity}}</p>
-                            <p>Arrival City: {{this.arrivalCity}}</p>
-                            <p>Trip Distance: {{this.tripDistance}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p>Trip made by:</p>
-                            <p>{{user.userName}}</p>
-                        </div>
-                        <div class="col-4">
-                            <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View
-                                    Trip</button></a>
-                        </div>
+        </div>
+        <div class="col-6">
+            <div id="example-list" class="container">
+                {{#each destination}}
+                <div data-id="{{this.id}}" class="row">
+                    <div class="col-4">
+                        <p>Departure City: {{this.departureCity}}</p>
+                        <p>Arrival City: {{this.arrivalCity}}</p>
+                        <p>Trip Distance: {{this.tripDistance}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Stuff did:</p>
+                        <ul>
+                            {{#each activities}}
+                            <li>{{this.activityName}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="col-4">
+                        <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View
+                                Trip</button></a>
                     </div>
                     {{/each}}
                 </div>

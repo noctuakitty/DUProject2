@@ -11,16 +11,40 @@ var API = {
   },
   getActivities: function(type) {
     $.get("/api/trips/" + type, function(response) {
-      console.log(response);
       for (var i = 0; i < response.length; i++) {
-        addActivity(response[i].activityName, response[i].activityDescription);
+        if (response[i].Activities.length > 0) {
+          for (var j = 0; j < response[i].Activities.length; j++) {
+            var match = false;
+            for (var k = 0; k < activityArray.length; k++) {
+              if (response[i].Activities[j].activityName === activityArray[k]) {
+                match = true;
+              }
+            }
+            if (match === false) {
+              addActivity(
+                response[i].Activities[j].activityName,
+                response[i].Activities[j].activityDescription
+              );
+            }
+          }
+        }
       }
+    });
+  },
+  saveActivities: function(example) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "/api/activities",
+      data: JSON.stringify(example)
     });
   }
 };
+var activityArray = [];
 var startTrip = function(event) {
   event.preventDefault();
-
   var home = $("#departure")
     .val()
     .trim();
@@ -41,39 +65,27 @@ var startTrip = function(event) {
   $("#trip-type-text")
     .text("Trip Type: " + tripType)
     .attr("data-name", tripType);
-  var tripId = queryLocations(home, destination, user);
-  var activityLabel = $("<label>").text("Activity");
-  var activityInput = $("<input>") 
-    .attr("type", "text")
-    .attr("id", "activity-input")
-    .addClass("form-control");
-  var activityDescLabel = $("<label>").text("Description");
-  var activityDesc = $("<input>")
-    .attr("type", "text")
-    .attr("id", "activity-description")
-    .addClass("form-control");
-  var button = $("<button>")
-    .attr("type", "button")
-    .attr("id", "add-activity")
-    .addClass("btn btn-danger")
-    .text("Add Activity");
-  $("#activity-input-div").append(activityLabel);
-  $("#activity-input-div").append(activityInput);
-  $("#activity-des-div").append(activityDescLabel);
-  $("#activity-des-div").append(activityDesc);
-  $("#activity-button-div").append(button);
+  queryLocations(home, destination, user);
+};
 
-  $("#add-activity").on("click", function() {
-    var activity = $("#activity-input")
-      .val()
-      .trim();
-    var description = $("#activity-description")
-      .val()
-      .trim();
-    addActivity(activity, description);
+var saveTripActivities = function(activity, description, tripData, i) {
+  activity = {
+    activityName: activity,
+    activityDescription: description,
+    DestinationId: tripData.id,
+    UserId: tripData.UserId
+  };
+  API.saveActivities(activity).then(function() {
+    if (i === activityArray.length - 1) {
+      window.reload();
+    }
+    return;
   });
 };
+
 var addActivity = function(activity, description) {
+  activityArray.push(activity);
+  console.log(activityArray);
   var activityId = activity.replace(/\s+/g, "-").toLowerCase();
   $("#activities").append(
     $("<div>")
@@ -84,6 +96,7 @@ var addActivity = function(activity, description) {
           .addClass("form-check-input")
           .val(activity)
           .attr("id", activityId)
+          .attr("data-description", description)
       )
       .append(
         $("<label>")
@@ -144,9 +157,62 @@ var queryLocations = function(home, destination, user) {
       };
 
       API.saveTrip(trip).then(function(data) {
-        return data.id;
+        printActivityDiv(data);
       });
     });
+  });
+};
+var printActivityDiv = function(data) {
+  var tripData = data;
+  console.log(tripData);
+  var activityLabel = $("<label>").text("Activity");
+  var activityInput = $("<input>")
+    .attr("type", "text")
+    .attr("id", "activity-input")
+    .addClass("form-control");
+  var activityDescLabel = $("<label>").text("Description");
+  var activityDesc = $("<input>")
+    .attr("type", "text")
+    .attr("id", "activity-description")
+    .addClass("form-control");
+  var button = $("<button>")
+    .attr("type", "button")
+    .attr("id", "add-activity")
+    .addClass("btn btn-danger")
+    .text("Add Activity");
+  $("#activity-input-div").append(activityLabel);
+  $("#activity-input-div").append(activityInput);
+  $("#activity-des-div").append(activityDescLabel);
+  $("#activity-des-div").append(activityDesc);
+  $("#activity-button-div").append(button);
+  var button2 = $("<button>")
+    .attr("type", "button")
+    .attr("id", "submit-trip")
+    .addClass("btn btn-danger")
+    .text("Finish Trip");
+  $("#finish-trip").append(button2);
+
+  $("#add-activity").on("click", function() {
+    var activity = $("#activity-input")
+      .val()
+      .trim();
+    var description = $("#activity-description")
+      .val()
+      .trim();
+    $("#activity-input").val("");
+    $("#activity-description").val("");
+    addActivity(activity, description);
+  });
+  $("#submit-trip").on("click", function() {
+    for (var i = 0; i < activityArray.length; i++) {
+      var buttonId = activityArray[i].replace(/\s+/g, "-").toLowerCase();
+      if ($("#" + buttonId).prop("checked") === true) {
+        var activity = $("#" + buttonId).val();
+        var description = $("#" + buttonId).attr("data-description");
+        saveTripActivities(activity, description, tripData);
+      }
+    }
+    location.reload();
   });
 };
 var getDistance = function(lat1, lat2, lon1, lon2) {
