@@ -5,7 +5,45 @@ body {
   color: #FDFEFE;
   text-shadow: black -1px 1px 0;
 }
-h3 {
-  color: #FDFEFE;
-  text-shadow: black -1px 1px 0;
+
+.form-group,.custom-select,.form-control {
+  margin-bottom: 10px;
+}
+
+.trip {
+  border: solid 1px #FDFEFE;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+.form-check-input {
+  margin-right: 0px;
+  position: relative;
+  left: 20px;
+}
+
+#trip-blog {
+  margin-bottom: 20px;
+}
+
+#add-activity {
+  position: relative;
+  top: 29px;
+  height: 45px;
+}
+#activities {
+  margin-bottom: 20px;
+}
+
+#user,#start-trip-form,#trip-log,#example-list,.card {
+  background: rgba(103, 103, 223, 0.719);
+  border: solid 1px black;
+  border-radius: 5px;
+  padding: 20px;
+}
+.col-6 {
+  margin-top: 20px;
+}
+#example-list,#activities {
+  font-size:10px
 }
