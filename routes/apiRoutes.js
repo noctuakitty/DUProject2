@@ -44,6 +44,19 @@ module.exports = function(app) {
       res.json(results);
     });
   });
+  app.put("/api/trips/:id", function (req, res) {
+    console.log(req.body)
+    db.Destination.update(
+      { tripBlog: req.body.tripBlog },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    ).then(function (results) {
+      res.json(results);
+    });
+  });
 
   // Delete an example by id
   app.delete("/api/examples/:id", function(req, res) {

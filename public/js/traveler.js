@@ -59,9 +59,6 @@ var startTrip = function(event) {
   $("#arrive-text")
     .text("Arrival City:  " + destination)
     .attr("data-name", destination);
-  // $("#trip-type-text")
-  //   .text("Trip Type: " + tripType)
-  //   .attr("data-name", tripType);
   queryLocations(home, destination, user);
 };
 
@@ -81,23 +78,27 @@ var addActivity = function(activity, description) {
   activityArray.push(activity);
   console.log(activityArray);
   var activityId = activity.replace(/\s+/g, "-").toLowerCase();
-  $("#activities").append(
-    $("<div>")
-      .addClass("form-check")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("form-check-input")
-          .val(activity)
-          .attr("id", activityId)
-          .attr("data-description", description)
-      )
-      .append(
-        $("<label>")
-          .addClass("form-check-label")
-          .text(activity + "     Description: " + description)
-      )
-  );
+  var row = $("<tr>").addClass("row");
+  var activityDiv = $("<td>")
+    .addClass("activity col-5 form-check-label")
+    .text(activity);
+  var descriptionDiv = $("<td>")
+    .addClass("activity col-5")
+    .text("Description: " + description);
+  var check = $("<td>")
+    .addClass("col-2")
+    .append(
+      $("<input>")
+        .attr("type", "checkbox")
+        .addClass("form-check-input")
+        .val(activity)
+        .attr("id", activityId)
+        .attr("data-description", description)
+    );
+  row.append(check);
+  row.append(activityDiv);
+  row.append(descriptionDiv);
+  $("#activities").append(row);
 };
 
 var queryLocations = function(home, destination, user) {
@@ -180,8 +181,8 @@ var printActivityDiv = function(data) {
   $("#activity-des-div").append(activityDescLabel);
   $("#activity-des-div").append(activityDesc);
   $("#activity-button-div").append(button);
-  var blogText = $("<div>")
-    .attr("type", "text")
+  var blogText = $("<textarea>")
+    .attr("type", "textarea")
     .attr("id", "trip-blog")
     .addClass("form-control")
     .attr("rows", "3");
@@ -190,6 +191,7 @@ var printActivityDiv = function(data) {
     .attr("id", "submit-trip")
     .addClass("btn btn-danger")
     .text("Finish Trip");
+  $("#finish-trip").append($("<label>").text("Travel Log"));
   $("#finish-trip").append(blogText);
   $("#finish-trip").append(button2);
 
@@ -205,6 +207,7 @@ var printActivityDiv = function(data) {
     addActivity(activity, description);
   });
   $("#submit-trip").on("click", function() {
+    console.log(tripData)
     for (var i = 0; i < activityArray.length; i++) {
       var buttonId = activityArray[i].replace(/\s+/g, "-").toLowerCase();
       if ($("#" + buttonId).prop("checked") === true) {
@@ -213,6 +216,10 @@ var printActivityDiv = function(data) {
         saveTripActivities(activity, description, tripData);
       }
     }
+    var blog = {
+      id: tripData.id,
+      tripBlog:$("#trip-blog").val()
+    };
     userMiles += parseInt(tripData.tripDistance);
     var newMiles = {
       id: tripData.UserId,
@@ -223,7 +230,13 @@ var printActivityDiv = function(data) {
       type: "PUT",
       data: newMiles
     }).then(function() {
-      location.reload();
+      console.log(blog)
+      $.ajax("/api/trips/" + tripData.id, {
+        type: "PUT",
+        data: blog 
+      }).then(function(){
+        location.reload()
+      })
     });
   });
 };

@@ -8,21 +8,24 @@ module.exports = function(app) {
       order: [["createdAt", "DESC"]]
     }).then(function(destinations) {
       var destinations = destinations;
-      db.User.findAll({}).then(function(users) {
+      db.User.findAll({
+        order: [["milesTraveled", "DESC"]]
+      }).then(function(users) {
         res.render("index", {
           destination: destinations,
           user: users
         });
       });
-    }); 
+    });
   });
 
   // Load example page and pass in an example by id
   app.get("/trip/:id", function(req, res) {
-    db.Destination.findOne({ where: { id: req.params.id } }).then(function(
-      destinations
-    ) {
-      console.log(destinations);
+    db.Destination.findOne({
+      where: { id: req.params.id },
+      include: [db.Activity, db.User]
+    }).then(function(destinations) {
+      console.log(destinations.Activities);
       res.render("trip", {
         destination: destinations
       });
@@ -31,7 +34,8 @@ module.exports = function(app) {
   app.get("/traveler/:id", function(req, res) {
     db.User.findOne({
       where: { id: req.params.id },
-      include: [db.Destination, db.Activity]
+      include: [db.Destination, db.Activity],
+      order: [["createdAt", "DESC"]]
     }).then(function(user) {
       var destinations = user.Destinations;
 
@@ -54,7 +58,7 @@ module.exports = function(app) {
           activities: activities
         };
       }
-  
+
       res.render("traveler", {
         destination: destinations,
         user: user
