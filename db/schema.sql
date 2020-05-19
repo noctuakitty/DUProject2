@@ -7,14 +7,3 @@
 DROP DATABASE IF EXISTS destinations;
 CREATE DATABASE destinations;
 USE destinations;
-
-drop table destinations;
-CREATE TABLE destinations (
-locationType varchar (200) NOT NULL,
-locationName varchar (200) NOT NULL,
-city varchar (200) NOT NULL,
-id int NOT NULL auto_increment,
-primary key (id)
-);
-
-SELECT * FROM destinations;
