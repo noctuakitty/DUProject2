@@ -3,7 +3,22 @@
     <div class="row">
         <div class="col-6">
             <div id="user">
-                <h2>{{user.userName}}</h2>
+                <h1 id="profileTitle">Profile Name: {{user.userName}}</h1>
+                <div id="sideBarInfo">
+                    <h2 id="sideBarTitle">Profile Info: </h2>
+                </div>
+                <div id="sideBarInfo">
+                    <h4>Hometown:</h4>
+                    <p>{{user.homeTown}}</p>
+                </div>
+                <div id="sideBarInfo">
+                    <h4>Favorite Activities:</h4>
+                    <p>{{user.favActivity}}</p>
+                </div>
+                <div id="sideBarInfo">
+                    <h4>Favorite Destinations:</h4>
+                    <p>{{user.favDestination}}</p>
+                </div>
                 <h4 id="miles" value="{{user.milesTraveled}}">Miles Traveled: {{user.milesTraveled}}</h4>
             </div>
             <div id="start-trip-form">

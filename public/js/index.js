@@ -7,35 +7,35 @@ var API = {
   saveExample: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       type: "POST",
       url: "api/examples",
-      data: JSON.stringify(example)
+      data: JSON.stringify(example),
     });
   },
   getExamples: function() {
     return $.ajax({
       url: "api/examples",
-      type: "GET"
+      type: "GET",
     });
   },
   deleteExample: function(id) {
     return $.ajax({
       url: "api/examples/" + id,
-      type: "DELETE"
+      type: "DELETE",
     });
   },
   saveUser: function(user) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       type: "POST",
       url: "api/users",
-      data: JSON.stringify(user)
+      data: JSON.stringify(user),
     });
-  }
+  },
 };
 
 // refreshExamples gets new examples from the db and repopulates the list
@@ -83,7 +83,13 @@ var createNewTraveller = function(event) {
       .trim(),
     homeTown: $("#hometown")
       .val()
-      .trim()
+      .trim(),
+    favActivity: $("#favActivity")
+      .val()
+      .trim(),
+    favDestination: $("#favDestination")
+      .val()
+      .trim(),
   };
   API.saveUser(newUser).then(function() {
     location.reload();

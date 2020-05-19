@@ -23,32 +23,43 @@
                     {{#each user}}
                     <option value="{{this.id}}">{{this.userName}}</option>
                     {{/each}}
-              
+
                   </select>
-              
+
                   <button id="submit" type="button" class="btn btn-primary float-right">Submit</button>
                 </div>
               </form>
             </div>
-          
-          <div class="col-6">
-            <h3 style="margin-top:50px">Create New Traveler</h3>
-            <form class="clearfix mb-4" action="POST">
-              <div class="form-group">
-                <label for="example-text">Traveler:</label>
-                <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text" placeholder="Traveler">
-              </div>
-              <div class="form-group">
-                <label for="example-description">Hometown</label>
-                <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
-                  placeholder="Hometown"></textarea>
-              </div>
-              <button id="submit-user" class="btn btn-primary float-right">Submit</button>
-            </form>
+
+            <div class="col-6">
+              <h3 style="margin-top:50px">Create New Traveler</h3>
+              <form class="clearfix mb-4" action="POST">
+                <div class="form-group">
+                  <label for="example-text">Traveler:</label>
+                  <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text"
+                    placeholder="Traveler">
+                </div>
+                <div class="form-group">
+                  <label for="example-description">Hometown</label>
+                  <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
+                    placeholder="Hometown"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="example-description">Favorite Activities</label>
+                  <input type="text" class="form-control" id="favActivity" aria-describedby="example-description"
+                    placeholder="Favorite Activities"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="example-description">Favorite Destinations</label>
+                  <input type="text" class="form-control" id="favDestination" aria-describedby="example-description"
+                    placeholder="Favorite Destinations"></textarea>
+                </div>
+                <button id="submit-user" class="btn btn-primary float-right">Submit</button>
+              </form>
+            </div>
           </div>
-          </div>
-          
-         
+
+
 
           <h3 style="margin-top:50px">Trips taken:</h3>
           <div id="example-list" class="container">

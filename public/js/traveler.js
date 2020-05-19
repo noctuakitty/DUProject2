@@ -2,11 +2,11 @@ var API = {
   saveTrip: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       type: "POST",
       url: "../api/trips",
-      data: JSON.stringify(example)
+      data: JSON.stringify(example),
     });
   },
   getActivities: function(type) {
@@ -34,13 +34,13 @@ var API = {
   saveActivities: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       type: "POST",
       url: "/api/activities",
-      data: JSON.stringify(example)
+      data: JSON.stringify(example),
     });
-  }
+  },
 };
 var activityArray = [];
 var startTrip = function(event) {
@@ -67,7 +67,7 @@ var saveTripActivities = function(activity, description, tripData, i) {
     activityName: activity,
     activityDescription: description,
     DestinationId: tripData.id,
-    UserId: tripData.UserId
+    UserId: tripData.UserId,
   };
   API.saveActivities(activity).then(function() {
     return;
@@ -111,7 +111,7 @@ var queryLocations = function(home, destination, user) {
     APIKey;
   $.ajax({
     url: queryURL,
-    method: "GET"
+    method: "GET",
   }).then(function(response) {
     home = response.name;
     var departureLon = response.coord.lon;
@@ -130,7 +130,7 @@ var queryLocations = function(home, destination, user) {
       APIKey;
     $.ajax({
       url: queryURL,
-      method: "GET"
+      method: "GET",
     }).then(function(res) {
       destination = res.name;
       API.getActivities(destination);
@@ -148,7 +148,7 @@ var queryLocations = function(home, destination, user) {
         departureCity: home,
         arrivalCity: destination,
         tripDistance: distance,
-        UserId: user
+        UserId: user,
       };
 
       API.saveTrip(trip).then(function(data) {
@@ -207,7 +207,7 @@ var printActivityDiv = function(data) {
     addActivity(activity, description);
   });
   $("#submit-trip").on("click", function() {
-    console.log(tripData)
+    console.log(tripData);
     for (var i = 0; i < activityArray.length; i++) {
       var buttonId = activityArray[i].replace(/\s+/g, "-").toLowerCase();
       if ($("#" + buttonId).prop("checked") === true) {
@@ -218,25 +218,25 @@ var printActivityDiv = function(data) {
     }
     var blog = {
       id: tripData.id,
-      tripBlog:$("#trip-blog").val()
+      tripBlog: $("#trip-blog").val(),
     };
     userMiles += parseInt(tripData.tripDistance);
     var newMiles = {
       id: tripData.UserId,
-      milesTraveled: userMiles
+      milesTraveled: userMiles,
     };
     userMiles += tripData.tripDistance;
     $.ajax("/api/users/" + tripData.UserId, {
       type: "PUT",
-      data: newMiles
+      data: newMiles,
     }).then(function() {
-      console.log(blog)
+      console.log(blog);
       $.ajax("/api/trips/" + tripData.id, {
         type: "PUT",
-        data: blog 
-      }).then(function(){
-        location.reload()
-      })
+        data: blog,
+      }).then(function() {
+        location.reload();
+      });
     });
   });
 };
