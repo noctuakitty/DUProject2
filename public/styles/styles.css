@@ -2,8 +2,10 @@ body {
   font-family: 'Times New Roman', Times, serif;
   background-image: url(https://www.publicdomainpictures.net/pictures/190000/velka/travel-background-1469438406Duy.jpg);
   background-size: cover;
+  background-repeat: no-repeat;
   color: #FDFEFE;
   text-shadow: black -1px 1px 0;
+  text-align: center;
 }
 h3 {
   color: #FDFEFE;
@@ -49,4 +51,7 @@ h3 {
 }
 #example-list,#activities {
   font-size:10px
+}
+.col-6 {
+  background-color: rgba(255,255,255, 0.2) !important;
 }

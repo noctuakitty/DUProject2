@@ -18,7 +18,12 @@
                             <input type="text" class="form-control" id="arrival" placeholder="Arrival City"></textarea>
                         </div>
                     </div>
-                    <button id="submit" value="{{user.id}}" class="btn btn-primary float-right">Start Trip</button>
+                     <div id="calendar">
+                        <label for="from">From</label>
+                        <input type="text" id="from" name="from">
+                        <label for="to">to</label>
+                        <input type="text" id="to" name="to"></div>
+                    <button id="submit" value="{{user.id}}" class="btn btn-secondary float-right">Start Trip</button>
                 </form>
             </div>
 
@@ -70,7 +75,7 @@
                         </table>
                     </div>
                     <div class="col-4">
-                        <a href="/trip/{{this.id}}"><button type="button" class="btn btn-primary float-right">View
+                        <a href="/trip/{{this.id}}"><button type="button" class="btn btn-secondary float-right">View
                                 Trip</button></a>
                     </div>
                 </div>
@@ -80,8 +85,11 @@
         </div>
     </div>
 
-
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/js/traveler.js"></script>
     </body>
 
