@@ -3,20 +3,21 @@
 
 Our MVP is 
 
-Dream Trip-planner
+Travel Blogger
 
 ---
 ---
 
 Our new technology is 
 
-React Calender Icon Badge
+React
+React Calender
 
 ---
 ---
 
 Our problem we want to solve is 
 
-Plan a expensive dream fantasy trip for those who like to fantasize about living large ~
+Blogging past trips and possibly future trips.
 
 ---
