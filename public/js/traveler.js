@@ -207,7 +207,7 @@ var printActivityDiv = function(data) {
     addActivity(activity, description);
   });
   $("#submit-trip").on("click", function() {
-    console.log(tripData)
+    console.log(tripData);
     for (var i = 0; i < activityArray.length; i++) {
       var buttonId = activityArray[i].replace(/\s+/g, "-").toLowerCase();
       if ($("#" + buttonId).prop("checked") === true) {
@@ -218,7 +218,7 @@ var printActivityDiv = function(data) {
     }
     var blog = {
       id: tripData.id,
-      tripBlog:$("#trip-blog").val()
+      tripBlog: $("#trip-blog").val()
     };
     userMiles += parseInt(tripData.tripDistance);
     var newMiles = {
@@ -230,13 +230,13 @@ var printActivityDiv = function(data) {
       type: "PUT",
       data: newMiles
     }).then(function() {
-      console.log(blog)
+      console.log(blog);
       $.ajax("/api/trips/" + tripData.id, {
         type: "PUT",
-        data: blog 
-      }).then(function(){
-        location.reload()
-      })
+        data: blog
+      }).then(function() {
+        location.reload();
+      });
     });
   });
 };
@@ -256,3 +256,36 @@ var getDistance = function(lat1, lat2, lon1, lon2) {
   return d;
 };
 $("#submit").on("click", startTrip);
+
+$(function() {
+  var dateFormat = "mm/dd/yy",
+    from = $("#from")
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3
+      })
+      .on("change", function() {
+        to.datepicker("option", "minDate", getDate(this));
+      }),
+    to = $("#to")
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3
+      })
+      .on("change", function() {
+        from.datepicker("option", "maxDate", getDate(this));
+      });
+
+  function getDate(element) {
+    var date;
+    try {
+      date = $.datepicker.parseDate(dateFormat, element.value);
+    } catch (error) {
+      date = null;
+    }
+
+    return date;
+  }
+});
