@@ -10,8 +10,7 @@ Travel Blogger
 
 Our new technology is 
 
-React
-React Calender
+Jqeury DatePicker
 
 ---
 ---
