@@ -1,13 +1,15 @@
 <div class="container">
-
+    <header id="profileHeader">
+        <h1 id="profileTitle">Profile Page</h1>
+    </header>
     <div class="row">
-        <div class="col-6">
+        <div class="col-6">\
             <div id="user">
 
-                <h2 id= "user-name" value="{{user.id}}">{{user.userName}}</h2>
+                <h2 id="user-name" value="{{user.id}}">{{user.userName}}</h2>
                 <h5 id="miles" value="{{user.milesTraveled}}">Miles Traveled: {{user.milesTraveled}}</h5>
                 <h5>Hometown: {{user.homeTown}}</h5>
-                <h5>Favorite Destination: {{user.favoriteDestination}}</h5> 
+                <h5>Favorite Destination: {{user.favoriteDestination}}</h5>
                 <h5> Favorite Activity: {{user.favoriteActivity}}</h5>
                 <h5 id="countries-visited"></h5>
             </div>
@@ -23,7 +25,7 @@
                             <input type="text" class="form-control" id="arrival" placeholder="Arrival City"></textarea>
                         </div>
                     </div>
-                     <div id="calendar">
+                    <div id="calendar">
                         <label for="from">From</label>
                         <input type="text" id="from" name="from">
                         <label for="to">to</label>
@@ -85,10 +87,12 @@
                     <div class="col-4">
                         <a href="/trip/{{this.id}}"><button type="button" class="btn btn-secondary float-right">View
                                 Trip</button></a>
-                        <button id="{{this.id}}" data-miles="{{this.tripDistance}}" data-user="{{this.UserId}}" type="button" class="btn btn-danger float-right delete" style="width:90.68px; padding: 6px 6px;">Delete Trip
-                                </button>
+                        <button id="{{this.id}}" data-miles="{{this.tripDistance}}" data-user="{{this.UserId}}"
+                            type="button" class="btn btn-danger float-right delete"
+                            style="width:90.68px; padding: 6px 6px;">Delete Trip
+                        </button>
                     </div>
-                    
+
                 </div>
                 {{/if}}
                 {{/each}}
