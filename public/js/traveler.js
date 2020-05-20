@@ -40,9 +40,17 @@ var API = {
       url: "/api/activities",
       data: JSON.stringify(example)
     });
+  },
+  deleteTrip: function(id) {
+    return $.ajax({
+      url: "/api/trips/" + id,
+      type: "DELETE"
+    });
   }
 };
 var activityArray = [];
+var userMiles = parseInt($("#miles").attr("value"));
+var userId = $("#user-name").attr("value");
 var startTrip = function(event) {
   event.preventDefault();
   var home = $("#departure")
@@ -165,7 +173,6 @@ var queryLocations = function(home, destination, user, startDate, endDate) {
 };
 var printActivityDiv = function(data) {
   var tripData = data;
-  var userMiles = parseInt($("#miles").attr("value"));
   console.log(userMiles);
   var activityLabel = $("<label>").text("Activity");
   var activityInput = $("<input>")
@@ -261,7 +268,26 @@ var getDistance = function(lat1, lat2, lon1, lon2) {
   var d = R * c;
   return d;
 };
+var deleteTrip = function() {
+  var idToDelete = $(this).attr("id");
+  userMiles -= parseInt($(this).attr("data-miles"));
+  console.log(user)
+  var newMiles = {
+    id: userId,
+    milesTraveled: userMiles
+  };
+  console.log(newMiles)
+  API.deleteTrip(idToDelete).then(function() {
+    $.ajax("/api/users/" + newMiles.id, {
+      type: "PUT",
+      data: newMiles
+    }).then(function() {
+      location.reload();
+    });
+  });
+};
 $("#submit").on("click", startTrip);
+$(".delete").on("click", deleteTrip);
 
 $(function() {
   var dateFormat = "mm/dd/yy",
