@@ -41,8 +41,17 @@ var API = {
       data: JSON.stringify(example),
     });
   },
+
+  deleteTrip: function(id) {
+    return $.ajax({
+      url: "/api/trips/" + id,
+      type: "DELETE"
+    });
+  }
 };
 var activityArray = [];
+var userMiles = parseInt($("#miles").attr("value"));
+var userId = $("#user-name").attr("value");
 var startTrip = function(event) {
   event.preventDefault();
   var home = $("#departure")
@@ -52,6 +61,8 @@ var startTrip = function(event) {
     .val()
     .trim();
   var user = $("#submit").val();
+  var startDate = $("#to").val();
+  var endDate = $("#from").val();
   $("#start-trip-form").empty();
   $("#depart-text")
     .text("Departure City: " + home)
@@ -59,7 +70,8 @@ var startTrip = function(event) {
   $("#arrive-text")
     .text("Arrival City:  " + destination)
     .attr("data-name", destination);
-  queryLocations(home, destination, user);
+  $("#dates-text").text("Dates:" + startDate + "-" + endDate);
+  queryLocations(home, destination, user, startDate, endDate);
 };
 
 var saveTripActivities = function(activity, description, tripData, i) {
@@ -101,7 +113,7 @@ var addActivity = function(activity, description) {
   $("#activities").append(row);
 };
 
-var queryLocations = function(home, destination, user) {
+var queryLocations = function(home, destination, user, startDate, endDate) {
   var APIKey = "166a433c57516f51dfab1f7edaed8413";
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?" +
@@ -143,14 +155,19 @@ var queryLocations = function(home, destination, user) {
         departureLon,
         arrivalLon
       );
+
       $("#distance-text").text("Travel Distance:  " + parseInt(distance));
       var trip = {
         departureCity: home,
         arrivalCity: destination,
         tripDistance: distance,
         UserId: user,
-      };
 
+        startDate: startDate,
+        endDate: endDate
+
+      };
+      console.log(trip);
       API.saveTrip(trip).then(function(data) {
         printActivityDiv(data);
       });
@@ -159,7 +176,6 @@ var queryLocations = function(home, destination, user) {
 };
 var printActivityDiv = function(data) {
   var tripData = data;
-  var userMiles = parseInt($("#miles").attr("value"));
   console.log(userMiles);
   var activityLabel = $("<label>").text("Activity");
   var activityInput = $("<input>")
@@ -218,7 +234,7 @@ var printActivityDiv = function(data) {
     }
     var blog = {
       id: tripData.id,
-      tripBlog: $("#trip-blog").val(),
+      tripBlog: $("#trip-blog").val()
     };
     userMiles += parseInt(tripData.tripDistance);
     var newMiles = {
@@ -233,7 +249,8 @@ var printActivityDiv = function(data) {
       console.log(blog);
       $.ajax("/api/trips/" + tripData.id, {
         type: "PUT",
-        data: blog,
+
+        data: blog
       }).then(function() {
         location.reload();
       });
@@ -255,4 +272,56 @@ var getDistance = function(lat1, lat2, lon1, lon2) {
   var d = R * c;
   return d;
 };
+var deleteTrip = function() {
+  var idToDelete = $(this).attr("id");
+  userMiles -= parseInt($(this).attr("data-miles"));
+  console.log(user)
+  var newMiles = {
+    id: userId,
+    milesTraveled: userMiles
+  };
+  console.log(newMiles)
+  API.deleteTrip(idToDelete).then(function() {
+    $.ajax("/api/users/" + newMiles.id, {
+      type: "PUT",
+      data: newMiles
+    }).then(function() {
+      location.reload();
+    });
+  });
+};
 $("#submit").on("click", startTrip);
+$(".delete").on("click", deleteTrip);
+
+$(function() {
+  var dateFormat = "mm/dd/yy",
+    from = $("#from")
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3
+      })
+      .on("change", function() {
+        to.datepicker("option", "minDate", getDate(this));
+      }),
+    to = $("#to")
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3
+      })
+      .on("change", function() {
+        from.datepicker("option", "maxDate", getDate(this));
+      });
+
+  function getDate(element) {
+    var date;
+    try {
+      date = $.datepicker.parseDate(dateFormat, element.value);
+    } catch (error) {
+      date = null;
+    }
+
+    return date;
+  }
+});

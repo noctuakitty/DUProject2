@@ -84,12 +84,14 @@ var createNewTraveller = function(event) {
     homeTown: $("#hometown")
       .val()
       .trim(),
-    favActivity: $("#favActivity")
+
+    favoriteActivity: $("#fav-activity")
       .val()
       .trim(),
-    favDestination: $("#favDestination")
+    favoriteDestination: $("#fav-destination")
       .val()
-      .trim(),
+      .trim()
+
   };
   API.saveUser(newUser).then(function() {
     location.reload();
