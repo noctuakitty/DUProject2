@@ -16,7 +16,7 @@ h3 {
   .form-group,
   .custom-select,
   .form-control {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   .trip {
@@ -63,5 +63,18 @@ h3 {
 
   #example-list,
   #activities {
-    font-size: 10px
+    font-size: 12px
   }
+
+
+  .card{
+    background-color: rgba(255, 255, 255, 0.2) !important;
+  }
+  .ui-datepicker {
+    background-color:  rgba(255, 255, 255, 0.5);
+  }
+  .miles {
+    height: 40px;
+  }
+  
+

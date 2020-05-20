@@ -4,7 +4,10 @@
         <div class="col-6">
             <div id="user">
                 <h2>{{user.userName}}</h2>
-                <h4 id="miles" value="{{user.milesTraveled}}">Miles Traveled: {{user.milesTraveled}}</h4>
+                <h5 id="miles" value="{{user.milesTraveled}}">Miles Traveled: {{user.milesTraveled}}</h5>
+                <h5>Hometown: {{user.homeTown}}</h5>
+                <h5>Favorite Destination: {{user.favoriteDestination}}</h5> 
+                <h5> Favorite Activity: {{user.favoriteActivity}}</h5>
             </div>
             <div id="start-trip-form">
                 <form action="POST" style="margin-bottom:50px">
@@ -32,7 +35,7 @@
                 <p id="depart-text"></p>
                 <p id="arrive-text"></p>
                 <p id="distance-text"></p>
-                <p id="trip-type-text"></p>
+                <p id="dates-text"></p>
                 <form>
                     <div class="form-row">
                         <div class="col-4" id="activity-input-div"></div>
@@ -50,6 +53,7 @@
             </div>
         </div>
         <div class="col-6">
+            <h3>Trips taken:</h3>
             <div id="example-list" class="container">
                 {{#each destination}}
                 <div data-id="{{this.id}}" class="row trip">
@@ -59,6 +63,7 @@
                         <p>Trip Distance: {{this.tripDistance}}</p>
                     </div>
                     <div class="col-4">
+                        <p>Dates:{{this.startDate}}-{{this.endDate}}</p>
                         <table>
                             <tr class="row">
                                 <th>

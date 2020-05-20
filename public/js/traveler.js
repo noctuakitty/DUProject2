@@ -52,6 +52,8 @@ var startTrip = function(event) {
     .val()
     .trim();
   var user = $("#submit").val();
+  var startDate = $("#to").val();
+  var endDate = $("#from").val();
   $("#start-trip-form").empty();
   $("#depart-text")
     .text("Departure City: " + home)
@@ -59,7 +61,8 @@ var startTrip = function(event) {
   $("#arrive-text")
     .text("Arrival City:  " + destination)
     .attr("data-name", destination);
-  queryLocations(home, destination, user);
+  $("#dates-text").text("Dates:" + startDate + "-" + endDate);
+  queryLocations(home, destination, user, startDate, endDate);
 };
 
 var saveTripActivities = function(activity, description, tripData, i) {
@@ -101,7 +104,7 @@ var addActivity = function(activity, description) {
   $("#activities").append(row);
 };
 
-var queryLocations = function(home, destination, user) {
+var queryLocations = function(home, destination, user, startDate, endDate) {
   var APIKey = "166a433c57516f51dfab1f7edaed8413";
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?" +
@@ -143,14 +146,17 @@ var queryLocations = function(home, destination, user) {
         departureLon,
         arrivalLon
       );
+
       $("#distance-text").text("Travel Distance:  " + parseInt(distance));
       var trip = {
         departureCity: home,
         arrivalCity: destination,
         tripDistance: distance,
-        UserId: user
+        UserId: user,
+        startDate: startDate,
+        endDate: endDate
       };
-
+      console.log(trip);
       API.saveTrip(trip).then(function(data) {
         printActivityDiv(data);
       });
