@@ -4,6 +4,7 @@ var exphbs = require("express-handlebars");
 var {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 var db = require("./models");
 var Handlebars = require('handlebars');
+
 var app = express();
 var PORT = process.env.PORT || 3000;
 

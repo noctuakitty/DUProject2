@@ -4,10 +4,20 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
+    departureState: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    departureCountry: { type: DataTypes.STRING, allowNull: false },
     arrivalCity: {
       type: DataTypes.STRING,
       allowNull: false
     },
+    arrivalState: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    arrivalCountry: { type: DataTypes.STRING, allowNull: false },
     tripDistance: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -20,6 +30,10 @@ module.exports = function(sequelize, DataTypes) {
     endDate: {
       type: DataTypes.DATEONLY,
       allowNull: false
+    },
+    savedTrip: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
   Destination.associate = function(models) {
