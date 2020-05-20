@@ -2,11 +2,11 @@ var API = {
   saveTrip: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       type: "POST",
       url: "../api/trips",
-      data: JSON.stringify(example)
+      data: JSON.stringify(example),
     });
   },
   getActivities: function(type) {
@@ -34,13 +34,14 @@ var API = {
   saveActivities: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       type: "POST",
       url: "/api/activities",
-      data: JSON.stringify(example)
+      data: JSON.stringify(example),
     });
   },
+
   deleteTrip: function(id) {
     return $.ajax({
       url: "/api/trips/" + id,
@@ -78,7 +79,7 @@ var saveTripActivities = function(activity, description, tripData, i) {
     activityName: activity,
     activityDescription: description,
     DestinationId: tripData.id,
-    UserId: tripData.UserId
+    UserId: tripData.UserId,
   };
   API.saveActivities(activity).then(function() {
     return;
@@ -122,7 +123,7 @@ var queryLocations = function(home, destination, user, startDate, endDate) {
     APIKey;
   $.ajax({
     url: queryURL,
-    method: "GET"
+    method: "GET",
   }).then(function(response) {
     home = response.name;
     var departureLon = response.coord.lon;
@@ -141,7 +142,7 @@ var queryLocations = function(home, destination, user, startDate, endDate) {
       APIKey;
     $.ajax({
       url: queryURL,
-      method: "GET"
+      method: "GET",
     }).then(function(res) {
       destination = res.name;
       API.getActivities(destination);
@@ -161,8 +162,10 @@ var queryLocations = function(home, destination, user, startDate, endDate) {
         arrivalCity: destination,
         tripDistance: distance,
         UserId: user,
+
         startDate: startDate,
         endDate: endDate
+
       };
       console.log(trip);
       API.saveTrip(trip).then(function(data) {
@@ -236,16 +239,17 @@ var printActivityDiv = function(data) {
     userMiles += parseInt(tripData.tripDistance);
     var newMiles = {
       id: tripData.UserId,
-      milesTraveled: userMiles
+      milesTraveled: userMiles,
     };
     userMiles += tripData.tripDistance;
     $.ajax("/api/users/" + tripData.UserId, {
       type: "PUT",
-      data: newMiles
+      data: newMiles,
     }).then(function() {
       console.log(blog);
       $.ajax("/api/trips/" + tripData.id, {
         type: "PUT",
+
         data: blog
       }).then(function() {
         location.reload();
