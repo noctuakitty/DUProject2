@@ -55,6 +55,8 @@ module.exports = function(app) {
           departureCity: user.Destinations[i].departureCity,
           arrivalCity: user.Destinations[i].arrivalCity,
           tripDistance: user.Destinations[i].tripDistance,
+          startDate: user.Destinations[i].startDate,
+          endDate: user.Destinations[i].endDate,
           activities: activities
         };
       }

@@ -83,6 +83,12 @@ var createNewTraveller = function(event) {
       .trim(),
     homeTown: $("#hometown")
       .val()
+      .trim(),
+    favoriteActivity: $("#fav-activity")
+      .val()
+      .trim(),
+    favoriteDestination: $("#fav-destination")
+      .val()
       .trim()
   };
   API.saveUser(newUser).then(function() {
