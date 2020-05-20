@@ -14,35 +14,70 @@
         <div class="col-8 offset-2">
           <div class="row">
             <div class="col-6">
-              <h3 style="margin-top:50px">Select Traveler</h3>
-              <form class="clearfix mb-4" action="POST">
-                <div class="form-group">
-                  <label for="category">Traveler:</label>
-                  <select class="selectpicker custom-select" id="traveler">
-                    <option></option>
-                    {{#each user}}
-                    <option value="{{this.id}}">{{this.userName}}</option>
-                    {{/each}}
-              
-                  </select>
-              
-                  <button id="submit" type="button" class="btn btn-secondary float-right">Submit</button>
+              <h3 style="margin-top:20px">Miles Leaders</h3>
+              <div class = "row miles" style="border-bottom:solid white 2px">
+                <div class="col-6">
+                  <p style="position: relative; bottom:5px">Traveler</p>
                 </div>
-              </form>
+                <div class="col-6">
+                  <p style="position: relative; bottom:5px">Miles Traveled</p>
+                </div>
+              </div>
+            
+              {{#each user}}
+                <div class="row miles">
+                  <div class="col-6">
+                    <p>{{this.userName}}</p>
+                  </div>
+                  <div class="col-6">
+                    <p>{{this.milesTraveled}}</p>
+                  </div>
+                </div>
+              {{/each}}
+              
             </div>
           
           <div class="col-6">
-            <h3 style="margin-top:50px">Create New Traveler</h3>
+            <h3 style="margin-top:20px">Select Traveler</h3>
             <form class="clearfix mb-4" action="POST">
               <div class="form-group">
-                <label for="example-text">Traveler:</label>
-                <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text" placeholder="Traveler">
+                <label for="category">Traveler:</label>
+                <select class="selectpicker custom-select" id="traveler">
+                  <option></option>
+                  {{#each user}}
+                  <option value="{{this.id}}">{{this.userName}}</option>
+                  {{/each}}
+            
+                </select>
+            
+                <button id="submit" type="button" class="btn btn-secondary float-right">Submit</button>
               </div>
-              <div class="form-group">
-                <label for="example-description">Hometown</label>
-                <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
-                  placeholder="Hometown"></textarea>
+            </form>
+            <h3 style="margin-top:10px">Create New Traveler</h3>
+            <form class="clearfix mb-4" action="POST">
+              <div class = "form-row">
+                <div class="form-group col-6">
+                  <label for="example-text">Traveler:</label>
+                  <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text" placeholder="Traveler">
+                </div>
+                <div class="form-group col-6">
+                  <label for="example-description">Hometown:</label>
+                  <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
+                    placeholder="Hometown"></textarea>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label>Favorite Destination:</label>
+                    <input type="text" id="fav-destination" class="form-control" aria-describedby="example-text" placeholder="Favorite Destination">
+                  </div>
+                  <div class="form-group col-6">
+                    <label>Favorite Activity:</label>
+                    <input type="text" class="form-control" id="fav-activity" aria-describedby="example-description"
+                      placeholder="Favorite Activity"></textarea>
+                  </div>
+                </div>
               </div>
+              
               <button id="submit-user" class="btn btn-secondary float-right">Submit</button>
             </form>
           </div>
@@ -50,7 +85,7 @@
           
          
 
-          <h3 style="margin-top:50px">Trips taken:</h3>
+          <h3 style="margin-top:20px">Recent trips taken:</h3>
           <div id="example-list" class="container">
             {{#each destination}}
             <div data-id="{{this.id}}" class="row trip">
@@ -58,9 +93,10 @@
                 <p>Departure City: {{this.departureCity}}</p>
                 <p>Arrival City: {{this.arrivalCity}}</p>
                 <p>Trip Distance: {{this.tripDistance}}</p>
-                <p>{{this.User.userName}}</p>
+                <p>Taken by: {{this.User.userName}}</p>
               </div>
               <div class="col-4">
+                <p>Dates: From {{this.startDate}} to {{this.endDate}}</p>
                 <table>
                   <tr class="row">
                     <th>
