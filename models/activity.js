@@ -5,11 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     activityType: DataTypes.STRING
   });
   Activity.associate = function(models) {
-    Activity.belongsTo(models.Destination, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+    Activity.belongsTo(models.Destination, {});
   };
   return Activity;
 };
