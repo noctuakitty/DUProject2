@@ -53,7 +53,12 @@ module.exports = function(app) {
         destinations[i] = {
           id: user.Destinations[i].id,
           departureCity: user.Destinations[i].departureCity,
+          departureState: user.Destinations[i].departureState,
+          departureCountry: user.Destinations[i].departureCountry,
           arrivalCity: user.Destinations[i].arrivalCity,
+          arrivalState: user.Destinations[i].arrivalState,
+          arrivalCountry: user.Destinations[i].arrivalCountry,
+          savedTrip: user.Destinations[i].savedTrip,
           tripDistance: user.Destinations[i].tripDistance,
           startDate: user.Destinations[i].startDate,
           endDate: user.Destinations[i].endDate,

@@ -9,6 +9,7 @@
                 <h5>Hometown: {{user.homeTown}}</h5>
                 <h5>Favorite Destination: {{user.favoriteDestination}}</h5> 
                 <h5> Favorite Activity: {{user.favoriteActivity}}</h5>
+                <h5 id="countries-visited"></h5>
             </div>
             <div id="start-trip-form">
                 <form action="POST" style="margin-bottom:50px">
@@ -57,10 +58,11 @@
             <h3>Trips taken:</h3>
             <div id="example-list" class="container">
                 {{#each destination}}
+                {{#if savedTrip}}
                 <div data-id="{{this.id}}" class="row trip">
                     <div class="col-4">
-                        <p>Departure City: {{this.departureCity}}</p>
-                        <p>Arrival City: {{this.arrivalCity}}</p>
+                        <p>Departure City: {{this.departureCity}},{{this.departureState}},{{this.departureCountry}}</p>
+                        <p>Arrival City: {{this.arrivalCity}},{{this.arrivalState}},{{this.arrivalCountry}}</p>
                         <p>Trip Distance: {{this.tripDistance}}</p>
                     </div>
                     <div class="col-4">
@@ -88,14 +90,13 @@
                     </div>
                     
                 </div>
+                {{/if}}
                 {{/each}}
 
             </div>
         </div>
     </div>
 
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

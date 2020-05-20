@@ -2,15 +2,15 @@ var API = {
   saveTrip: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       type: "POST",
       url: "../api/trips",
-      data: JSON.stringify(example),
+      data: JSON.stringify(example)
     });
   },
   getActivities: function(type) {
-    $.get("/api/trips/" + type, function(response) {
+    $.get("/api/activities/" + type, function(response) {
       for (var i = 0; i < response.length; i++) {
         if (response[i].Activities.length > 0) {
           for (var j = 0; j < response[i].Activities.length; j++) {
@@ -34,11 +34,33 @@ var API = {
   saveActivities: function(example) {
     return $.ajax({
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       type: "POST",
       url: "/api/activities",
-      data: JSON.stringify(example),
+      data: JSON.stringify(example)
+    });
+  },
+  getTrips: function(userId) {
+    $.get("/api/trips/" + userId, function(response) {
+      var countriesVisited = [];
+      for (var i = 0; i < response.length; i++) {
+        if (response[i].savedTrip === false) {
+          API.deleteTrip(response[i].id);
+        } else {
+          var match = false;
+          for (var j = 0; j < countriesVisited.length; j++) {
+            if (response[i].arrivalCountry === countriesVisited[j]) {
+              match = true;
+            }
+          }
+          if (match === false) {
+            countriesVisited.push(response[i].arrivalCountry);
+          }
+        }
+      }
+      countriesVisited.join(" , ");
+      $("#countries-visited").text("Countries Visited: " + countriesVisited);
     });
   },
 
@@ -52,6 +74,7 @@ var API = {
 var activityArray = [];
 var userMiles = parseInt($("#miles").attr("value"));
 var userId = $("#user-name").attr("value");
+API.getTrips(userId);
 var startTrip = function(event) {
   event.preventDefault();
   var home = $("#departure")
@@ -61,16 +84,9 @@ var startTrip = function(event) {
     .val()
     .trim();
   var user = $("#submit").val();
-  var startDate = $("#to").val();
-  var endDate = $("#from").val();
+  var startDate = $("#from").val();
+  var endDate = $("#to").val();
   $("#start-trip-form").empty();
-  $("#depart-text")
-    .text("Departure City: " + home)
-    .attr("data-name", home);
-  $("#arrive-text")
-    .text("Arrival City:  " + destination)
-    .attr("data-name", destination);
-  $("#dates-text").text("Dates:" + startDate + "-" + endDate);
   queryLocations(home, destination, user, startDate, endDate);
 };
 
@@ -79,7 +95,7 @@ var saveTripActivities = function(activity, description, tripData, i) {
     activityName: activity,
     activityDescription: description,
     DestinationId: tripData.id,
-    UserId: tripData.UserId,
+    UserId: tripData.UserId
   };
   API.saveActivities(activity).then(function() {
     return;
@@ -114,66 +130,59 @@ var addActivity = function(activity, description) {
 };
 
 var queryLocations = function(home, destination, user, startDate, endDate) {
-  var APIKey = "166a433c57516f51dfab1f7edaed8413";
-  var queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?" +
-    "q=" +
-    home +
-    "&units=imperial&appid=" +
-    APIKey;
-  $.ajax({
-    url: queryURL,
-    method: "GET",
-  }).then(function(response) {
-    home = response.name;
-    var departureLon = response.coord.lon;
-    var departureLat = response.coord.lat;
+  $.get("/distances/" + home + "/" + destination, function(response) {
+    home = response.depart;
+    destination = response.arrive;
+    API.getActivities(destination.city);
+    var departureLon = response.depart.longitude;
+    var departureLat = response.depart.latitude;
+    var arrivalLon = response.arrive.longitude;
+    var arrivalLat = response.arrive.latitude;
 
-    if (!home) {
-      alert("You must enter a home city");
-      return;
-    }
+    var distance = getDistance(
+      departureLat,
+      arrivalLat,
+      departureLon,
+      arrivalLon
+    );
+    $("#depart-text")
+      .text(
+        "Departure City: " + home.city + "," + home.state + "," + home.country
+      )
+      .attr("data-name", home);
+    $("#arrive-text")
+      .text(
+        "Arrival City:  " +
+          destination.city +
+          ", " +
+          destination.state +
+          "," +
+          destination.country
+      )
+      .attr("data-name", destination);
+    $("#dates-text").text("Dates:" + startDate + "-" + endDate);
 
-    var queryURL =
-      "https://api.openweathermap.org/data/2.5/weather?" +
-      "q=" +
-      destination +
-      "&units=imperial&appid=" +
-      APIKey;
-    $.ajax({
-      url: queryURL,
-      method: "GET",
-    }).then(function(res) {
-      destination = res.name;
-      API.getActivities(destination);
-      var arrivalLon = res.coord.lon;
-      var arrivalLat = res.coord.lat;
+    $("#distance-text").text("Travel Distance:  " + parseInt(distance));
+    var trip = {
+      departureCity: home.city,
+      departureState: home.state,
+      departureCountry: home.country,
+      arrivalCity: destination.city,
+      arrivalState: destination.state,
+      arrivalCountry: destination.country,
+      tripDistance: distance,
+      UserId: user,
 
-      var distance = getDistance(
-        departureLat,
-        arrivalLat,
-        departureLon,
-        arrivalLon
-      );
-
-      $("#distance-text").text("Travel Distance:  " + parseInt(distance));
-      var trip = {
-        departureCity: home,
-        arrivalCity: destination,
-        tripDistance: distance,
-        UserId: user,
-
-        startDate: startDate,
-        endDate: endDate
-
-      };
-      console.log(trip);
-      API.saveTrip(trip).then(function(data) {
-        printActivityDiv(data);
-      });
+      startDate: startDate,
+      endDate: endDate
+    };
+    console.log(trip);
+    API.saveTrip(trip).then(function(data) {
+      printActivityDiv(data);
     });
   });
 };
+
 var printActivityDiv = function(data) {
   var tripData = data;
   console.log(userMiles);
@@ -234,17 +243,18 @@ var printActivityDiv = function(data) {
     }
     var blog = {
       id: tripData.id,
-      tripBlog: $("#trip-blog").val()
+      tripBlog: $("#trip-blog").val(),
+      savedTrip: true
     };
     userMiles += parseInt(tripData.tripDistance);
     var newMiles = {
       id: tripData.UserId,
-      milesTraveled: userMiles,
+      milesTraveled: userMiles
     };
     userMiles += tripData.tripDistance;
     $.ajax("/api/users/" + tripData.UserId, {
       type: "PUT",
-      data: newMiles,
+      data: newMiles
     }).then(function() {
       console.log(blog);
       $.ajax("/api/trips/" + tripData.id, {
@@ -275,12 +285,12 @@ var getDistance = function(lat1, lat2, lon1, lon2) {
 var deleteTrip = function() {
   var idToDelete = $(this).attr("id");
   userMiles -= parseInt($(this).attr("data-miles"));
-  console.log(user)
+  console.log(user);
   var newMiles = {
     id: userId,
     milesTraveled: userMiles
   };
-  console.log(newMiles)
+  console.log(newMiles);
   API.deleteTrip(idToDelete).then(function() {
     $.ajax("/api/users/" + newMiles.id, {
       type: "PUT",
