@@ -9,14 +9,17 @@
 
 <body>
   <div id="home">
+    <header id="mainHeader">
+      <h1 id="homeTitle">Dream Trip Builder</h1>
+    </header>
     <div class="container">
       <div class="row">
         <div class="col-8 offset-2">
-          <div class="row">
+          <div class="row" id="milesLeaders">
             <div class="col-6">
 
               <h3 style="margin-top:20px">Miles Leaders</h3>
-              <div class = "row miles" style="border-bottom:solid white 2px">
+              <div class="row miles" style="border-bottom:solid white 2px">
                 <div class="col-6">
                   <p style="position: relative; bottom:5px">Traveler</p>
                 </div>
@@ -24,65 +27,67 @@
                   <p style="position: relative; bottom:5px">Miles Traveled</p>
                 </div>
               </div>
-            
+
               {{#each user}}
-                <div class="row miles">
-                  <div class="col-6">
-                    <p>{{this.userName}}</p>
-                  </div>
-                  <div class="col-6">
-                    <p>{{this.milesTraveled}}</p>
-                  </div>
+              <div class="row miles">
+                <div class="col-6">
+                  <p>{{this.userName}}</p>
                 </div>
+                <div class="col-6">
+                  <p>{{this.milesTraveled}}</p>
+                </div>
+              </div>
               {{/each}}
-              
+
             </div>
 
-          
-          <div class="col-6">
-            <h3 style="margin-top:20px">Select Traveler</h3>
-            <form class="clearfix mb-4" action="POST">
-              <div class="form-group">
-                <label for="category">Traveler:</label>
-                <select class="selectpicker custom-select" id="traveler">
-                  <option></option>
-                  {{#each user}}
-                  <option value="{{this.id}}">{{this.userName}}</option>
-                  {{/each}}
-            
-                </select>
-            
-                <button id="submit" type="button" class="btn btn-secondary float-right">Submit</button>
-              </div>
-            </form>
-            <h3 style="margin-top:10px">Create New Traveler</h3>
-            <form class="clearfix mb-4" action="POST">
-              <div class = "form-row">
-                <div class="form-group col-6">
-                  <label for="example-text">Traveler:</label>
-                  <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text" placeholder="Traveler">
+
+            <div class="col-6">
+              <h3 style="margin-top:20px">Select Traveler</h3>
+              <form class="clearfix mb-4" action="POST">
+                <div class="form-group">
+                  <label for="category">Traveler:</label>
+                  <select class="selectpicker custom-select" id="traveler">
+                    <option></option>
+                    {{#each user}}
+                    <option value="{{this.id}}">{{this.userName}}</option>
+                    {{/each}}
+
+                  </select>
+
+                  <button id="submit" type="button" class="btn btn-secondary float-right">Submit</button>
                 </div>
-                <div class="form-group col-6">
-                  <label for="example-description">Hometown:</label>
-                  <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
-                    placeholder="Hometown"></textarea>
-                </div>
+              </form>
+              <h3 style="margin-top:10px">Create New Traveler</h3>
+              <form class="clearfix mb-4" action="POST">
                 <div class="form-row">
                   <div class="form-group col-6">
-                    <label>Favorite Destination:</label>
-                    <input type="text" id="fav-destination" class="form-control" aria-describedby="example-text" placeholder="Favorite Destination">
+                    <label for="example-text">Traveler:</label>
+                    <input type="text" id="traveler-name" class="form-control" aria-describedby="example-text"
+                      placeholder="Traveler">
                   </div>
                   <div class="form-group col-6">
-                    <label>Favorite Activity:</label>
-                    <input type="text" class="form-control" id="fav-activity" aria-describedby="example-description"
-                      placeholder="Favorite Activity"></textarea>
+                    <label for="example-description">Hometown:</label>
+                    <input type="text" class="form-control" id="hometown" aria-describedby="example-description"
+                      placeholder="Hometown"></textarea>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-6">
+                      <label>Favorite Destination:</label>
+                      <input type="text" id="fav-destination" class="form-control" aria-describedby="example-text"
+                        placeholder="Favorite Destination">
+                    </div>
+                    <div class="form-group col-6">
+                      <label>Favorite Activity:</label>
+                      <input type="text" class="form-control" id="fav-activity" aria-describedby="example-description"
+                        placeholder="Favorite Activity"></textarea>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <button id="submit-user" class="btn btn-secondary float-right">Submit</button>
-            </form>
-          </div>
+
+                <button id="submit-user" class="btn btn-secondary float-right">Submit</button>
+              </form>
+            </div>
           </div>
 
 
@@ -90,7 +95,7 @@
           <h3 style="margin-top:20px">Recent trips taken:</h3>
           <div id="example-list" class="container">
             {{#each destination}}
-              {{#if savedTrip}}
+            {{#if savedTrip}}
             <div data-id="{{this.id}}" class="row trip">
               <div class="col-4">
                 <p>Departure City: {{this.departureCity}},{{this.departureState}},{{this.departureCountry}}</p>
